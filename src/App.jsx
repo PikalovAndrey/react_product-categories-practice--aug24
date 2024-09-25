@@ -42,8 +42,9 @@ export const App = () => {
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category.id);
     const matchesSearch = product.name.toLowerCase().includes(input);
+    const mathcesUser = selectedUser === '' || product.user.id === selectedUser;
 
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesSearch && mathcesUser;
   });
 
   const handleSelectedUser = userId => {
@@ -69,7 +70,9 @@ export const App = () => {
               <a
                 data-cy="FilterAllUsers"
                 href="#/"
-                onClick={() => handleSelectedUser('')}
+                onClick={() => {
+                  handleSelectedUser('');
+                }}
                 className={selectedUser === '' ? 'is-active' : ''}
               >
                 All
@@ -79,7 +82,9 @@ export const App = () => {
                   key={user.id}
                   data-cy="FilterUser"
                   href="#/"
-                  onClick={() => handleSelectedUser(user.id)}
+                  onClick={() => {
+                    handleSelectedUser(user.id);
+                  }}
                   className={user.id === selectedUser ? 'is-active' : ''}
                 >
                   {user.name}
@@ -150,6 +155,7 @@ export const App = () => {
                 onClick={() => {
                   setSelectedCategories([]);
                   setSelectedUser('');
+                  setInput('');
                 }}
               >
                 Reset all filters
